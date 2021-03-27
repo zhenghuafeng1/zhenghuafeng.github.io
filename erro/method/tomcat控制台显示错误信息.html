@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>tomcat控制台显示错误信息</title>
+</head>
+<body>
+<h1><a href="../../index.html">目录</a>——<a href="../erro.html">开发错误</a>——tomcat控制台显示错误信息</h1>
+<div style="background:#EBE9E9">
+在在classes下添加文件logging.properties，内容如下：<br><br><br>
+handlers = org.apache.juli.FileHandler, java.util.logging.ConsoleHandler<br><br>
+
+############################################################<br><br>
+
+Handler specific properties.<br>
+Describes specific configuration info for Handlers.<br>
+############################################################<br><br>
+
+org.apache.juli.FileHandler.level = FINE<br>
+org.apache.juli.FileHandler.directory = ../logs<br>
+org.apache.juli.FileHandler.prefix = error-debug.<br><br>
+
+java.util.logging.ConsoleHandler.level = FINE<br>
+java.util.logging.ConsoleHandler.formatter = java.util.logging.SimpleFormatter<br>
+
+</div>
+</body>
+</html>

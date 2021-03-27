@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>maven不能下载jar</title>
+</head>
+<body>
+<h1><a href="../../index.html">目录</a>——<a href="../erro.html">开发错误</a>——maven不能下载jar</h1>
+<div style="background:#EBE9E9">
+选择项目 右击-点击Open'settings.xml' <br>
+修改下载镜像<br>
+ps：url中用http不好使（就是下载不了，或者下载缓慢的问题），所以此处可以换成https进行尝试~）<br>
+    <span>
+    	&lt;mirrors&gt;<br>
+        &nbsp&nbsp&lt;mirror&gt;<br>
+           &nbsp&nbsp&nbsp&nbsp &lt;id>nexus&lt;/id&gt;<br>
+            &nbsp&nbsp&nbsp&nbsp &lt;name>internal nexus repository&lt;/name&gt;<br>
+            &nbsp&nbsp&nbsp&nbsp &lt;!-- &lt;url>http://192.168.1.100:8081/nexus/content/groups/public/&lt;/url&gt;--&gt;<br>
+            &nbsp&nbsp&nbsp&nbsp &lt;url>http://repo.maven.apache.org/maven2&lt;/url&gt;<br>
+            &nbsp&nbsp&nbsp&nbsp &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;<br>
+        &nbsp&nbsp&lt;/mirror&gt;<br>
+    &lt;/mirrors&gt;<br>
+</span>
+</div>
+</body>
+</html>

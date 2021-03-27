@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Docker命令</title>
+</head>
+<body>
+<h1><a href="../../index.html">目录</a>——<a href="../command.html">常用命令</a>——Docker命令</h1>
+<div style="background:#EBE9E9;font-size: 18px">
+	<pre>
+nacos配置
+
+docker run --env MODE=standalone --name nacos -d -p 8848:8848 nacos/nacos-server:1.0.0
+
+ip:http://192.168.0.30:8848/nacos/#/index.html 访问，登录密码默认nacos/nacos
+	</pre>
+</div>
+
+<div style="background:#EBE9E9;font-size: 18px">
+	<pre>
+consul配置
+
+	启动第一个节点，叫 consul1
+	docker run --name consul1 -d 
+	-p 8500:8500 
+	-p 8300:8300 
+	-p 8301:8301 
+	-p 8302:8302 
+	-p 8600:8600 
+	consul agent -server -bootstrap-expect 2 -ui -bind=0.0.0.0 -client=0 .0.0.0
+
+	8500 : http 端口，用于 http 接口和 web ui访问；
+	8300 : server rpc 端口，同一数据中心 consul server 之间通过该端口通信；
+	8301 : serf lan 端口，同一数据中心consulclient通过该端口通信;用于处理当前
+			datacenter中LAN的gossip通信；
+	8302 : serf wan 端口，不同数据中心 consul server 通过该端口通信; 
+		   agent Server使用，处理与其他datacenter的gossip通信；
+	8600 : dns 端口，用于已注册的服务发现；
+
+	启动第二个节点，加入到 consul1
+	查看consul1的ip地址
+	docker inspect --format='{{.NetworkSettings.IPAddress}}' consul1
+	开启第二个节点（端口8501），并加入到 consul1
+	docker run --name consul2 -d -p 8501:8500 consul agent -server -ui -bind=0.0.0.0 -client=0.0.0.0 -join 172.17.0.4
+	开启第三个节点（端口8502），并加入到consul1’
+	docker run --name consul3 -d -p 8502:8500 consul agent -server -ui -bind=0.0.0.0 -client=0.0.0.0 -join 172.17.0.4
+
+	查看consul集群信息
+	docker exec -it consul1 consul members
+	</pre>
+</div>
+
+<div style="background:#EBE9E9;font-size: 18px">
+	<pre>
+zookeeper配置
+
+	docker run -d -p 2181:2181 --name some-zookeeper --restart always 3487af26dee9
+	</pre>
+</div>
+
+<div style="background:#EBE9E9;font-size: 18px">
+	<pre>
+nacos集群：
+
+docker run -it -m 512M --memory-swap -1 -d -e PREFER_HOST_MODE=hostname -e MODE=cluster -e NACOS_SERVER_PORT=8848 -e NACOS_SERVERS="127.0.0.1:8846 127.0.0.1:8847 127.0.0.1:8848" -e SPRING_DATASOURCE_PLATFORM=mysql -e MYSQL_SERVICE_HOST=127.0.0.1 -e MYSQL_SERVICE_PORT=3306 -e MYSQL_SERVICE_USER=root -e MYSQL_SERVICE_PASSWORD=123456 -e MYSQL_SERVICE_DB_NAME=nacos_config -e NACOS_SERVER_IP=127.0.0.1 -p 8848:8848 --name my-nacos1 e5b798c95e56
+	</pre>
+</div>
+
+<div style="background:#EBE9E9;font-size: 18px">
+	<pre>
+MySQL
+
+	docker run --name mysql56 -e MYSQL_ROOT_PASSWORD=123456 -d mysql
+	docker exec -it 89c5b9c81e74  bash
+	mysql -u root -p
+	</pre>
+</div>
+
+<div style="background:#EBE9E9;font-size: 18px">
+	<pre>
+docker
+
+	查看IP  docker inspect 容器名称或 id
+	</pre>
+</div>
+
+
+</body>
+</html>
